@@ -1,4 +1,4 @@
-
+$(document).ready(function() {
 
 var budget = 0;
 var notice = "";
@@ -26,13 +26,9 @@ var reset = function() {
     presentCValue = $("#presentCDiv").val(presentC);
     presentDValue = $("#presentDDiv").val(presentD);
     totalMoney = 0;
-    console.log(budget);
-    console.log(presentA);
-    console.log(presentAValue);
-    console.log(presentBValue);
-    console.log(presentCValue);
-    console.log(presentDValue);
 }
+
+reset();
 
 var win = function() {
     wins++;
@@ -62,9 +58,17 @@ var play = function() {
     } else {
         totalMoney = (totalMoney * 1) + (buttonValue * 1);
         $("#moneyTotalDiv").text(totalMoney);
+
+        if (totalMoney == budget) {
+            win();
+            reset();
+        } else if (totalMoney > budget) {
+            lose();
+            reset();
+        }
     }
 }
 
-$("#startGame").on("click", reset);
-
 $(".gift").on("click", play);
+
+}); // End of document ready
