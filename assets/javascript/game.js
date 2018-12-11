@@ -12,6 +12,7 @@ var presentDValue = $("#presentDDiv").val();
 var winNotice = "You won!";
 var loseNotice = "Try again.";
 var roundOver = false;
+var acctBalance = 0;
 
 var reset = function() {
     budget = Math.floor(Math.random() * (120 - 19) + 19);
@@ -19,31 +20,37 @@ var reset = function() {
     presentB = Math.floor(Math.random() * (12 - 1) + 1);
     presentC = Math.floor(Math.random() * (12 - 1) + 1);
     presentD = Math.floor(Math.random() * (12 - 1) + 1);
-    $("#moneyTotalDiv").text(totalMoney);
-    $("#budgetDiv").text(budget);
     presentAValue = $("#presentADiv").val(presentA);
     presentBValue = $("#presentBDiv").val(presentB);
     presentCValue = $("#presentCDiv").val(presentC);
     presentDValue = $("#presentDDiv").val(presentD);
     totalMoney = 0;
+    $("#moneyTotalDiv").text("$" + totalMoney);
+    $("#budgetDiv").text("$" + budget);
 }
 
 reset();
 
 var win = function() {
     wins++;
+    acctBalance = acctBalance + totalMoney;
     totalMoney = 0;
     reset();
     $("#notificationDiv").text(winNotice);
     $("#winDiv").text(wins);
+    $("#acctBalanceDiv").text("$" + acctBalance);
+    console.log(acctBalance);
 }
 
 var lose = function() {
     losses++;
+    acctBalance = acctBalance - totalMoney;
     totalMoney = 0;
     reset();
     $("#notificationDiv").text(loseNotice);
     $("#loseDiv").text(losses);
+    $("#acctBalanceDiv").text("$" + acctBalance);
+    console.log(acctBalance);
 }
 
 var play = function() {
@@ -57,8 +64,7 @@ var play = function() {
         reset();
     } else {
         totalMoney = (totalMoney * 1) + (buttonValue * 1);
-        $("#moneyTotalDiv").text(totalMoney);
-
+        $("#moneyTotalDiv").text("$" + totalMoney);
         if (totalMoney == budget) {
             win();
             reset();
@@ -71,4 +77,4 @@ var play = function() {
 
 $(".gift").on("click", play);
 
-}); // End of document ready
+});
